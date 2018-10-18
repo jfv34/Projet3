@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HappyFragment extends Fragment {
+public class NormalFragment extends Fragment {
 
-    public static HappyFragment newInstance() {
+    public static NormalFragment newInstance() {
 
-        return new HappyFragment();
+        return new NormalFragment();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class HappyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.happy, container, false);
+        return inflater.inflate(R.layout.normal, container, false);
     }
 
 }

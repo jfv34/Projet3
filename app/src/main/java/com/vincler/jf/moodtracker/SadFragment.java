@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 
 public class SadFragment extends Fragment {
 
-    public static SadFragment newInstance(int someInt, String someTitle) {
-        SadFragment fragmentDemo = new SadFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", someInt);
-        args.putString("someTitle", someTitle);
-        fragmentDemo.setArguments(args);
-        return fragmentDemo;
+
+
+
+    public static SadFragment newInstance() {
+        return new SadFragment();
     }
 
     @Override

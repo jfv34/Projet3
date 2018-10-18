@@ -8,23 +8,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HappyFragment extends Fragment {
 
-    public static HappyFragment newInstance() {
+public class Super_HappyFragment extends Fragment {
 
-        return new HappyFragment();
+
+    public static Super_HappyFragment newInstance() {
+
+        return new Super_HappyFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.happy, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
+                             @NonNull Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.super_happy, container, false);
     }
 
 }
+
