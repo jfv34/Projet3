@@ -12,14 +12,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.contentMenu) != null) {
-            FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-            ft1.replace(R.id.contentMenu, MenuFragment.newInstance());
-            ft1.commit();
-        }
 
-
-
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        ft2.replace(R.id.contentMood, HappyFragment.newInstance());
+        ft2.commit();
 
     }
 
