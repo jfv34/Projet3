@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+
 public class HappyFragment extends Fragment {
 
     public static HappyFragment newInstance() {
@@ -21,14 +22,22 @@ public class HappyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.happy, container, false);
+        super.onCreate(savedInstanceState);
+
+
+        // Swip view:
+
+        final View fragmentView = inflater.inflate(R.layout.happy, container, false);
+
         fragmentView.setOnTouchListener(new View.OnTouchListener() {
+
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -36,16 +45,33 @@ public class HappyFragment extends Fragment {
             }
         });
 
-        ImageButton menuButton = (ImageButton) fragmentView.findViewById(R.id.menuButton);
+        // Comments:
+        ImageButton commentButton = fragmentView.findViewById(R.id.commentButton);
 
-        menuButton.setOnClickListener(new View.OnClickListener() {
+        commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CommentDialogFragment.newInstance().show(getFragmentManager(), "");
             }
         });
+
+        // Historic:
+
+        ImageButton historicButton;
+        historicButton = fragmentView.findViewById(R.id.historicButton);
+
+        historicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("historicButton", "clicked");
+
+                // MainActivity.switchFragment(HistoricFragment.newInstance());
+
+            }
+
+        });
+
         return fragmentView;
 
     }
-
 }
