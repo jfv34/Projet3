@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void switchFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contentMood, fragment);

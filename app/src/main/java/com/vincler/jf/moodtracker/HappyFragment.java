@@ -1,10 +1,12 @@
 package com.vincler.jf.moodtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,21 +31,42 @@ public class HappyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final GestureDetector gestureDetector = new GestureDetector(getContext(), new SwipeListener() {
 
+            @Override
+            public boolean onSwipe(Direction direction) {
+                if (direction == Direction.up) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.contentMood, new NormalFragment());
+                    ft.commit();
+
+                }
+
+                if (direction == Direction.down) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.contentMood, new Super_HappyFragment());
+                    ft.commit();
+
+                }
+                return true;
+            }
+        });
 
         // Swip view:
+
 
         final View fragmentView = inflater.inflate(R.layout.happy, container, false);
 
         fragmentView.setOnTouchListener(new View.OnTouchListener() {
+                                            @Override
+                                            public boolean onTouch(View v, MotionEvent event) {
+                                                gestureDetector.onTouchEvent(event);
+                                                return true;
+                                            }
 
+                                        }
+        );
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return false;
-            }
-        });
 
         // Comments:
         ImageButton commentButton = fragmentView.findViewById(R.id.commentButton);
@@ -63,10 +86,10 @@ public class HappyFragment extends Fragment {
         historicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("historicButton", "clicked");
 
-                // MainActivity.switchFragment(HistoricFragment.newInstance());
+                Intent historicActivity = new Intent(getActivity(), HistoricActivity.class);
 
+                startActivity(historicActivity);
             }
 
         });
