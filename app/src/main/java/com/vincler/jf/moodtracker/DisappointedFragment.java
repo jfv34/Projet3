@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,16 +34,12 @@ public class DisappointedFragment extends Fragment {
             @Override
             public boolean onSwipe(Direction direction) {
                 if (direction == Direction.up) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.contentMood, new SadFragment());
-                    ft.commit();
+                    ((MainActivity) getActivity()).switchFragment(SadFragment.newInstance());
 
                 }
 
                 if (direction == Direction.down) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.contentMood, new NormalFragment());
-                    ft.commit();
+                    ((MainActivity) getActivity()).switchFragment(NormalFragment.newInstance());
 
                 }
                 return true;

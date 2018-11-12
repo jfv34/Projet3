@@ -34,9 +34,7 @@ public class NormalFragment extends Fragment {
                 }
 
                 if (direction == Direction.down) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.contentMood, new HappyFragment());
-                    ft.commit();
+                    ((MainActivity) getActivity()).switchFragment(HappyFragment.newInstance());
 
                 }
                 return true;

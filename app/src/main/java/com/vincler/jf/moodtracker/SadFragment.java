@@ -36,9 +36,7 @@ public class SadFragment extends Fragment {
             public boolean onSwipe(Direction direction) {
 
                 if (direction == Direction.down) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.contentMood, new DisappointedFragment());
-                    ft.commit();
+                    ((MainActivity) getActivity()).switchFragment(DisappointedFragment.newInstance());
 
                 }
                 return true;

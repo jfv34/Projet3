@@ -36,9 +36,7 @@ public class Super_HappyFragment extends Fragment {
             public boolean onSwipe(Direction direction) {
 
                 if (direction == Direction.up) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.contentMood, new HappyFragment());
-                    ft.commit();
+                    ((MainActivity) getActivity()).switchFragment(HappyFragment.newInstance());
 
                 }
                 return true;
