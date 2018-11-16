@@ -13,75 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-public class SadFragment extends Fragment {
+public class SadFragment extends MoodFragment {
 
     public static SadFragment newInstance() {
 
         return new SadFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public Fragment getDownFragment() {
+        return DisappointedFragment.newInstance();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final GestureDetector gestureDetector = new GestureDetector(getContext(), new SwipeListener() {
+    public Fragment getUpFragment() {
+        return null;
+    }
 
-            @Override
-            public boolean onSwipe(Direction direction) {
-
-                if (direction == Direction.down) {
-                    ((MainActivity) getActivity()).switchFragment(DisappointedFragment.newInstance());
-
-                }
-                return true;
-            }
-        });
-
-        // Swip view:
-        final View fragmentView = inflater.inflate(R.layout.sad, container, false);
-
-        fragmentView.setOnTouchListener(new View.OnTouchListener() {
-                                            @Override
-                                            public boolean onTouch(View v, MotionEvent event) {
-                                                gestureDetector.onTouchEvent(event);
-                                                return true;
-                                            }
-
-                                        }
-        );
-        // Comments:
-        ImageButton commentButton = fragmentView.findViewById(R.id.commentButton);
-
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommentDialogFragment.newInstance().show(getFragmentManager(), "");
-            }
-        });
-
-        // Historic:
-
-        ImageButton historicButton;
-        historicButton = fragmentView.findViewById(R.id.historicButton);
-
-        historicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent historicActivity = new Intent(getActivity(), HistoricActivity.class);
-
-                startActivity(historicActivity);
-            }
-
-        });
-
-
-        return fragmentView;
+    @Override
+    public Integer getLayout() {
+        return R.layout.sad;
     }
 }
