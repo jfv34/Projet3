@@ -20,10 +20,12 @@ abstract class MoodFragment extends Fragment {
 
     public abstract Integer getLayout();
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final GestureDetector gestureDetector = new GestureDetector(getContext(), new SwipeListener() {
+
 
             @Override
             public boolean onSwipe(Direction direction) {
@@ -64,6 +66,7 @@ abstract class MoodFragment extends Fragment {
             }
         });
 
+        // Historic:
         ImageButton historicButton;
         historicButton = fragmentView.findViewById(R.id.historicButton);
 
@@ -79,9 +82,6 @@ abstract class MoodFragment extends Fragment {
         });
 
         return fragmentView;
-
-
-        // Historic:
 
 
     }
