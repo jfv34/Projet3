@@ -7,36 +7,68 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
+
     SharedPreferences preferences;
+    Gson gson = new Gson();
+    Date date = new Date();
+    DateFormat dateFormat = new SimpleDateFormat("yy-DDD-hh", Locale.US);
+    String dateString = dateFormat.format(date);
+    HashMap historicMood = new HashMap();
+
+    public String historicMoodJson = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get the last memorized mood (or by default: normal mood)
         preferences = getPreferences(MODE_PRIVATE);
-
-
         setContentView(R.layout.activity_main);
+        // get the historicMood;
+
+        historicMoodJson = preferences.getString("historicMoodJson", "{}");
+
+        JSONObject root = null;
+        String currendMood = "NormalFragment";
+        try {
+            root = new JSONObject(historicMoodJson);
+            currendMood = root.optString(dateString);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         // displays the fragment of the last memorized mood
-        switch (preferences.getString("currentMood", "NormalFragment")){
+
+        switch (currendMood) {
             case "Super_HappyFragment":
                 switchFragment(Super_HappyFragment.newInstance());
                 break;
             case "HappyFragment":
                 switchFragment(HappyFragment.newInstance());
                 break;
-            case "NormalFragment":
-                switchFragment(NormalFragment.newInstance());
-                break;
             case "DisappointedFragment":
                 switchFragment(DisappointedFragment.newInstance());
                 break;
             case "SadFragment":
                 switchFragment(SadFragment.newInstance());
+                break;
+            default:
+                switchFragment(NormalFragment.newInstance());
                 break;
 
         }
@@ -49,8 +81,13 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.contentMood, fragment);
         ft.commit();
 
-        // memorize the current mood
-        preferences.edit().putString("currentMood", fragment.getClass().getSimpleName()).apply();
+        // memorize the current mood for the activity_historic (by dates)
+
+        dateString = dateFormat.format(date);
+
+        historicMood.put(dateString, fragment.getClass().getSimpleName());
+        preferences.edit().putString("historicMoodJson", gson.toJson(historicMood)).apply();
+
     }
 }
 
