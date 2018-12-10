@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Gson gson;
     List<Pair<String, String>> historicMood;
     Date date = new Date();
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd/hhmm", Locale.US);
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
     String dateString = dateFormat.format(date);
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         gson = new Gson();
         historicMood = new ArrayList<>();
         setContentView(R.layout.activity_main);
-        preferences = getSharedPreferences("historicMoodJson", MODE_PRIVATE);
+        preferences = getSharedPreferences("historicSharedPreference", MODE_PRIVATE);
 
 
         String historicMoodJson = preferences.getString("historicMoodJson", null);

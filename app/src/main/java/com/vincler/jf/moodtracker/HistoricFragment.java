@@ -53,7 +53,7 @@ public class HistoricFragment extends Fragment {
         }
         RecyclerView rv = (RecyclerView) fragmentView.findViewById(R.id.historiclist);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new HistoricAdapter(historicMood));
+        rv.setAdapter(new HistoricAdapter(getContext(),historicMood));
         return fragmentView;
     }
 
