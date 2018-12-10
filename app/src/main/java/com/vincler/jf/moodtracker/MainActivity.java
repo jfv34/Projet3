@@ -6,53 +6,49 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    SharedPreferences preferences;
-    Gson gson = new Gson();
+    private static SharedPreferences preferences;
+    private Gson gson;
+    List<Pair<String, String>> historicMood;
     Date date = new Date();
-    DateFormat dateFormat = new SimpleDateFormat("yy-DDD-hh", Locale.US);
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd/hhmm", Locale.US);
     String dateString = dateFormat.format(date);
-    HashMap historicMood = new HashMap();
-
-    public String historicMoodJson = "";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        preferences = getPreferences(MODE_PRIVATE);
+        gson = new Gson();
+        historicMood = new ArrayList<>();
         setContentView(R.layout.activity_main);
-        // get the historicMood;
+        preferences = getSharedPreferences("historicMoodJson", MODE_PRIVATE);
 
-        historicMoodJson = preferences.getString("historicMoodJson", "{}");
 
-        JSONObject root = null;
-        String currendMood = "NormalFragment";
-        try {
-            root = new JSONObject(historicMoodJson);
-            currendMood = root.optString(dateString);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String historicMoodJson = preferences.getString("historicMoodJson", null);
+        if (historicMoodJson != null) {
+            Type listType = new TypeToken<ArrayList<Pair<String, String>>>() {
+            }.getType();
+            historicMood = gson.fromJson(historicMoodJson, listType);
         }
 
-
-        // displays the fragment of the last memorized mood
+        String currendMood = "NormalFragment";
+        if (!historicMood.isEmpty()) {
+            currendMood = historicMood.get(historicMood.size() - 1).first;
+        }
 
         switch (currendMood) {
             case "Super_HappyFragment":
@@ -70,24 +66,23 @@ public class MainActivity extends AppCompatActivity {
             default:
                 switchFragment(NormalFragment.newInstance());
                 break;
-
         }
     }
 
-
     public void switchFragment(Fragment fragment) {
-        // displays the fragment with the mood
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contentMood, fragment);
         ft.commit();
 
-        // memorize the current mood for the activity_historic (by dates)
-
         dateString = dateFormat.format(date);
+        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).second.equals(dateString)) {
+            historicMood.remove(historicMood.size() - 1);
+        }
 
-        historicMood.put(dateString, fragment.getClass().getSimpleName());
+        historicMood.add(new Pair(fragment.getClass().getSimpleName(), dateString));
         preferences.edit().putString("historicMoodJson", gson.toJson(historicMood)).apply();
+
 
     }
 }
-

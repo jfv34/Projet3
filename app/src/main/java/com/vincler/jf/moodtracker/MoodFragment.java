@@ -66,6 +66,17 @@ abstract class MoodFragment extends Fragment {
             }
         });
 
+        // Sharing by SMS:
+        ImageButton sharingSMSButton = fragmentView.findViewById((R.id.SharingSMSButton));
+
+        sharingSMSButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharingSmsDialogFragment.newInstance().show(getFragmentManager(),"");
+
+            }
+        });
+
         // Historic:
         ImageButton historicButton;
         historicButton = fragmentView.findViewById(R.id.historicButton);

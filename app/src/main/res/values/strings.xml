@@ -6,4 +6,5 @@
     <string name="dialog_comment">Commentaire:</string>
     <string name="validate">VALIDER</string>
     <string name="cancel">ANNULER</string>
+    <string name="dialog_sharing_sms">Numéro de téléphone:</string>
 </resources>
