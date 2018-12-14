@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.contentMood, fragment);
         ft.commit();
 
+
         dateString = dateFormat.format(date);
         if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).second.equals(dateString)) {
             historicMood.remove(historicMood.size() - 1);
