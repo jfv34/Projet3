@@ -62,6 +62,7 @@ public class HistoricAdapter extends RecyclerView.Adapter {
             switch (data.first) {
                 case "Super_HappyFragment":
                     color = context.getResources().getColor(R.color.colorSuper_Happy);
+                    break;
                 case "HappyFragment":
                     color = context.getResources().getColor(R.color.colorHappy);
                     break;

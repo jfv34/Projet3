@@ -24,9 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences preferences;
     private Gson gson;
     List<Pair<String, String>> historicMood;
+
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
-    String dateString = dateFormat.format(date);
+    String dateToday = dateFormat.format(date);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         gson = new Gson();
         historicMood = new ArrayList<>();
+
         setContentView(R.layout.activity_main);
         preferences = getSharedPreferences("historicSharedPreference", MODE_PRIVATE);
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }.getType();
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
+
 
         String currendMood = "NormalFragment";
         if (!historicMood.isEmpty()) {
@@ -76,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
 
-        dateString = dateFormat.format(date);
-        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).second.equals(dateString)) {
+        dateToday = dateFormat.format(date);
+        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).second.equals(dateToday)) {
             historicMood.remove(historicMood.size() - 1);
         }
 
-        historicMood.add(new Pair(fragment.getClass().getSimpleName(), dateString));
+        historicMood.add(new Pair(fragment.getClass().getSimpleName(), dateToday));
         preferences.edit().putString("historicMoodJson", gson.toJson(historicMood)).apply();
 
 

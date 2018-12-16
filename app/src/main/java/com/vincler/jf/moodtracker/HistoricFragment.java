@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,11 +51,11 @@ public class HistoricFragment extends Fragment {
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
 
-        // historicMood --> invertedHistoricMood
-        invertedHistoricMood=new ArrayList<>();
+        // inverted historicMood
+        invertedHistoricMood = new ArrayList<>();
         for (int i = 1; i < historicMood.size(); i++) {
-            invertedHistoricMood.add(i-1,historicMood.get(historicMood.size() - i));
-    }
+            invertedHistoricMood.add(i - 1, historicMood.get(historicMood.size() - i));
+        }
 
 
         RecyclerView rv = (RecyclerView) fragmentView.findViewById(R.id.historiclist);
