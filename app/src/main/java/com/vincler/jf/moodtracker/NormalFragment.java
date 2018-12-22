@@ -24,5 +24,4 @@ public class NormalFragment extends MoodFragment {
     public Integer getLayout() {
         return R.layout.normal;
     }
-
 }

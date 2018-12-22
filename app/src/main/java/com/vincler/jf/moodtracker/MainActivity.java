@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static SharedPreferences preferences;
     private Gson gson;
-    List<Pair<String, String>> historicMood;
+    List<SaveMood> historicMood;
 
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
@@ -35,30 +34,28 @@ public class MainActivity extends AppCompatActivity {
 
         gson = new Gson();
         historicMood = new ArrayList<>();
+        String currendMood = "";
 
         setContentView(R.layout.activity_main);
         preferences = getSharedPreferences("historicSharedPreference", MODE_PRIVATE);
-
-
         String historicMoodJson = preferences.getString("historicMoodJson", null);
+
         if (historicMoodJson != null) {
-            Type listType = new TypeToken<ArrayList<Pair<String, String>>>() {
+            Type listType = new TypeToken<ArrayList<SaveMood>>() {
             }.getType();
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
 
-
-        String currendMood = "NormalFragment";
-        if (!historicMood.isEmpty()) {
-            currendMood = historicMood.get(historicMood.size() - 1).first;
+        if (!historicMood.isEmpty() | historicMood.get(historicMood.size() - 1).date != dateToday) {
+            currendMood = historicMood.get(historicMood.size() - 1).mood;
         }
 
         switch (currendMood) {
             case "Super_HappyFragment":
                 switchFragment(Super_HappyFragment.newInstance());
                 break;
-            case "HappyFragment":
-                switchFragment(HappyFragment.newInstance());
+            case "NormalFragment":
+                switchFragment(NormalFragment.newInstance());
                 break;
             case "DisappointedFragment":
                 switchFragment(DisappointedFragment.newInstance());
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 switchFragment(SadFragment.newInstance());
                 break;
             default:
-                switchFragment(NormalFragment.newInstance());
+                switchFragment(HappyFragment.newInstance());
                 break;
         }
     }
@@ -78,15 +75,15 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.contentMood, fragment);
         ft.commit();
 
+        String currentComment = "";
 
-        dateToday = dateFormat.format(date);
-        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).second.equals(dateToday)) {
+        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).date.equals(dateToday)) {
+            currentComment = historicMood.get(historicMood.size() - 1).comment;
             historicMood.remove(historicMood.size() - 1);
         }
 
-        historicMood.add(new Pair(fragment.getClass().getSimpleName(), dateToday));
+        historicMood.add(new SaveMood(fragment.getClass().getSimpleName(), dateToday, currentComment));
         preferences.edit().putString("historicMoodJson", gson.toJson(historicMood)).apply();
-
 
     }
 }

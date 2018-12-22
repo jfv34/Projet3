@@ -9,7 +9,6 @@ public class DisappointedFragment extends MoodFragment {
         return new DisappointedFragment();
     }
 
-
     @Override
     public Fragment getDownFragment() {
         return NormalFragment.newInstance();

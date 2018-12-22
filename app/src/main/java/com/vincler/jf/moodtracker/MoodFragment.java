@@ -32,19 +32,15 @@ abstract class MoodFragment extends Fragment {
                 Fragment downFragment = getDownFragment();
                 if (direction == Direction.down && downFragment != null) {
                     ((MainActivity) getActivity()).switchFragment(downFragment);
-
                 }
                 Fragment upFragment = getUpFragment();
                 if (direction == Direction.up && upFragment != null) {
                     ((MainActivity) getActivity()).switchFragment(upFragment);
-
                 }
                 return true;
             }
         });
 
-
-        // Swip view:
         final View fragmentView = inflater.inflate(getLayout(), container, false);
 
         fragmentView.setOnTouchListener(new View.OnTouchListener() {
@@ -56,6 +52,7 @@ abstract class MoodFragment extends Fragment {
 
                                         }
         );
+
         // Comments:
         ImageButton commentButton = fragmentView.findViewById(R.id.commentButton);
 
@@ -72,7 +69,7 @@ abstract class MoodFragment extends Fragment {
         sharingSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharingSmsDialogFragment.newInstance().show(getFragmentManager(),"");
+                SharingSmsDialogFragment.newInstance().show(getFragmentManager(), "");
 
             }
         });
@@ -84,9 +81,7 @@ abstract class MoodFragment extends Fragment {
         historicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent historicActivity = new Intent(getActivity(), HistoricActivity.class);
-
                 startActivity(historicActivity);
             }
 
@@ -94,8 +89,5 @@ abstract class MoodFragment extends Fragment {
 
         return fragmentView;
 
-
     }
-
-
 }

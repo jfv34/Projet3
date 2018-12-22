@@ -9,7 +9,6 @@ public class Super_HappyFragment extends MoodFragment {
         return new Super_HappyFragment();
     }
 
-
     @Override
     public Fragment getDownFragment() {
         return null;
