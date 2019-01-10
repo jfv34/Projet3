@@ -20,7 +20,6 @@ abstract class MoodFragment extends Fragment {
 
     public abstract Integer getLayout();
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ abstract class MoodFragment extends Fragment {
         });
 
         final View fragmentView = inflater.inflate(getLayout(), container, false);
-
         fragmentView.setOnTouchListener(new View.OnTouchListener() {
                                             @Override
                                             public boolean onTouch(View v, MotionEvent event) {
@@ -55,7 +53,6 @@ abstract class MoodFragment extends Fragment {
 
         // Comments:
         ImageButton commentButton = fragmentView.findViewById(R.id.commentButton);
-
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,19 +62,16 @@ abstract class MoodFragment extends Fragment {
 
         // Sharing by SMS:
         ImageButton sharingSMSButton = fragmentView.findViewById((R.id.SharingSMSButton));
-
         sharingSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharingSmsDialogFragment.newInstance().show(getFragmentManager(), "");
-
             }
         });
 
         // Historic:
         ImageButton historicButton;
         historicButton = fragmentView.findViewById(R.id.historicButton);
-
         historicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +82,5 @@ abstract class MoodFragment extends Fragment {
         });
 
         return fragmentView;
-
     }
 }

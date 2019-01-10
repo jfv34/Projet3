@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences preferences;
     private Gson gson;
     List<SaveMood> historicMood;
-
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
     String dateToday = dateFormat.format(date);
@@ -31,25 +30,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         gson = new Gson();
         historicMood = new ArrayList<>();
         String currendMood = "";
-
         setContentView(R.layout.activity_main);
         preferences = getSharedPreferences("historicSharedPreference", MODE_PRIVATE);
         String historicMoodJson = preferences.getString("historicMoodJson", null);
-
         if (historicMoodJson != null) {
             Type listType = new TypeToken<ArrayList<SaveMood>>() {
             }.getType();
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
-
-        if (!historicMood.isEmpty() | historicMood.get(historicMood.size() - 1).date != dateToday) {
+        if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).date != dateToday) {
             currendMood = historicMood.get(historicMood.size() - 1).mood;
         }
-
         switch (currendMood) {
             case "Super_HappyFragment":
                 switchFragment(Super_HappyFragment.newInstance());
@@ -70,20 +64,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchFragment(Fragment fragment) {
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contentMood, fragment);
         ft.commit();
-
         String currentComment = "";
-
         if (!historicMood.isEmpty() && historicMood.get(historicMood.size() - 1).date.equals(dateToday)) {
             currentComment = historicMood.get(historicMood.size() - 1).comment;
             historicMood.remove(historicMood.size() - 1);
         }
-
         historicMood.add(new SaveMood(fragment.getClass().getSimpleName(), dateToday, currentComment));
         preferences.edit().putString("historicMoodJson", gson.toJson(historicMood)).apply();
-
     }
 }

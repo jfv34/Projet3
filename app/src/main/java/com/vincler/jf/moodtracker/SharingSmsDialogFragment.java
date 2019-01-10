@@ -39,7 +39,6 @@ public class SharingSmsDialogFragment extends DialogFragment {
         final LayoutInflater factory = LayoutInflater.from(getActivity());
         final View alertDialogView = factory.inflate(R.layout.sharing_sms_dialog, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setView(alertDialogView);
         builder.setMessage(R.string.dialog_sharing_sms)
                 .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {

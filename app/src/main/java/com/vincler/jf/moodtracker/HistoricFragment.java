@@ -31,7 +31,6 @@ public class HistoricFragment extends Fragment {
         HistoricFragment fragment = new HistoricFragment();
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Nullable
@@ -43,7 +42,6 @@ public class HistoricFragment extends Fragment {
         Gson gson = new Gson();
         historicMood = new ArrayList<>();
         String historicMoodJson = preferences.getString("historicMoodJson", null);
-
         if (historicMoodJson != null) {
             Type listType = new TypeToken<ArrayList<SaveMood>>() {
             }.getType();
@@ -52,15 +50,12 @@ public class HistoricFragment extends Fragment {
 
         // inverted historicMood
         invertedHistoricMood = new ArrayList<>();
-
         for (int i = 1; i <= historicMood.size(); i++) {
             invertedHistoricMood.add(i - 1, historicMood.get(historicMood.size() - i));
         }
-
         RecyclerView rv = fragmentView.findViewById(R.id.historiclist);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(new HistoricAdapter(getContext(), invertedHistoricMood));
         return fragmentView;
     }
-
 }

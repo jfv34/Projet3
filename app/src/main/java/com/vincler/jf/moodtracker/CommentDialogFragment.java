@@ -49,7 +49,6 @@ public class CommentDialogFragment extends DialogFragment {
             }.getType();
             historic = gson.fromJson(historicMoodJson, listType);
         }
-
         final LayoutInflater factory = LayoutInflater.from(getActivity());
         final View alertDialogView = factory.inflate(R.layout.comment_dialog, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
