@@ -2,7 +2,7 @@ package com.vincler.jf.moodtracker;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-
+// taken from https://stackoverflow.com/questions/13095494/how-to-detect-swipe-direction-between-left-right-and-up-down/26387629#26387629
 public class SwipeListener extends GestureDetector.SimpleOnGestureListener {
 
     @Override
