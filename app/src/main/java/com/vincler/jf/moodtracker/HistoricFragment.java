@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,14 +49,25 @@ public class HistoricFragment extends Fragment {
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
 
-        // inverted historicMood
+
+        // inverted historicMood and dont show mood of the day in historic
         invertedHistoricMood = new ArrayList<>();
-        for (int i = 1; i <= historicMood.size(); i++) {
-            invertedHistoricMood.add(i - 1, historicMood.get(historicMood.size() - i));
+        for (int i = 1; i < historicMood.size(); i++) {
+            invertedHistoricMood.add(i - 1, historicMood.get(historicMood.size() - i - 1));
         }
-        RecyclerView rv = fragmentView.findViewById(R.id.historiclist);
+        final RecyclerView rv = fragmentView.findViewById(R.id.historiclist);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new HistoricAdapter(getContext(), invertedHistoricMood));
+        final ViewTreeObserver observer = rv.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        int cellHeight = rv.getHeight()/7;
+                        rv.setAdapter(new HistoricAdapter(getContext(), invertedHistoricMood, cellHeight));
+
+                    }
+                });
+
         return fragmentView;
     }
 }
