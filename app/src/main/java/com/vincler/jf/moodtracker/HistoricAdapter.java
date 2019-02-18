@@ -12,11 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.curioustechizen.ago.RelativeTimeTextView;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class HistoricAdapter extends RecyclerView.Adapter {
@@ -91,7 +86,7 @@ public class HistoricAdapter extends RecyclerView.Adapter {
                     break;
             }
             background.setBackgroundColor(color);
-            ConstraintSet constraintSet = new ConstraintSet();
+           ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(container);
             constraintSet.constrainPercentWidth(background.getId(), width);
             constraintSet.applyTo(container);
@@ -101,17 +96,11 @@ public class HistoricAdapter extends RecyclerView.Adapter {
             itemView.setLayoutParams(params);
 
             // Text display
-            RelativeTimeTextView v = itemView.findViewById(R.id.timestamp);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = null;
-            try {
-                date = formatter.parse(data.date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            long mills = date != null ? date.getTime() : 0;
-            v.setReferenceTime(mills);
-            historicMoodTextView.setText(data.date);
+
+            String timestampText[] = {"Hier", "Avant-hier", "Il y a trois jours", "il y a quatre jours",
+                    "il y a cinq jours", "il y a six jours", "il y a une semaine"};
+            TextView historicMoodTextView = itemView.findViewById(R.id.timestamp);
+            historicMoodTextView.setText(timestampText[getAdapterPosition()]);
 
             // Comment button
 
