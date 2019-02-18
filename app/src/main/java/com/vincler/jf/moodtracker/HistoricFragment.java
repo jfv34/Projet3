@@ -30,8 +30,9 @@ public class HistoricFragment extends Fragment {
 
     public static SharedPreferences preferences;
     List<SaveMood> historicMood;
-    List<SaveMood> invertedHistoricMood;
-    List<SaveMood> displayedHistoricMood;
+    List<SaveMood> historicMoodWithoutToday;
+    List<SaveMood> historicMoodCompleted;
+    List<SaveMood> historicMoodDisplayed;
 
     public static HistoricFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,16 +57,14 @@ public class HistoricFragment extends Fragment {
         }
 
 
-        // inverted historicMood and dont show mood of the day in historic
-        invertedHistoricMood = new ArrayList<>();
-        for (int i = 1; i < historicMood.size(); i++) {
-            invertedHistoricMood.add(i - 1, historicMood.get(historicMood.size() - i - 1));
+        // Don't show mood of the day in historic
+        historicMoodWithoutToday = new ArrayList<>();
+        for (int i = 0; i < historicMood.size() - 1; i++) {
+            historicMoodWithoutToday.add(i, historicMood.get(i));
         }
 
-        // adding dates without connections in the historic
-        displayedHistoricMood = new ArrayList<>();
-
-
+        // Adding dates without connections in the historic
+        historicMoodCompleted = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
 
         for (int i = 0; i < 7; i++) {
@@ -75,19 +74,17 @@ public class HistoricFragment extends Fragment {
             DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
             String dateBack = df.format(d);
             boolean dateFound = false;
-            for (int j = 0; j < invertedHistoricMood.size(); j++) {
-                if (dateBack.equals(invertedHistoricMood.get(j).date)) {
-                    displayedHistoricMood.add(i, invertedHistoricMood.get(j));
+            for (int j = 0; j < historicMoodWithoutToday.size(); j++) {
+                if (dateBack.equals(historicMoodWithoutToday.get(j).date)) {
+                    historicMoodCompleted.add(i, historicMoodWithoutToday.get(j));
                     dateFound = true;
-
                 }
-
-
             }
             if (!dateFound) {
-                displayedHistoricMood.add(i, new SaveMood("HappyFragment", dateBack, ""));
+                historicMoodCompleted.add(i, new SaveMood("HappyFragment", dateBack, ""));
             }
         }
+
 
         final RecyclerView rv = fragmentView.findViewById(R.id.historiclist);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -98,8 +95,7 @@ public class HistoricFragment extends Fragment {
                     @Override
                     public void onGlobalLayout() {
                         int cellHeight = rv.getHeight() / 7;
-                        rv.setAdapter(new HistoricAdapter(getContext(), displayedHistoricMood, cellHeight));
-// Once data has been obtained, this listener is no longer needed, so remove it...
+                        rv.setAdapter(new HistoricAdapter(getContext(), historicMoodCompleted, cellHeight));
                         rv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 });

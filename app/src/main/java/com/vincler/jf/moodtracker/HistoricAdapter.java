@@ -70,23 +70,23 @@ public class HistoricAdapter extends RecyclerView.Adapter {
                     break;
                 case "HappyFragment":
                     color = context.getResources().getColor(R.color.colorHappy);
-                    width = 0.8f;
+                    width = 0.84f;
                     break;
                 case "DisappointedFragment":
                     color = context.getResources().getColor(R.color.colorDisappointed);
-                    width = 0.4f;
+                    width = 0.51f;
                     break;
                 case "SadFragment":
                     color = context.getResources().getColor(R.color.colorSad);
-                    width = 0.2f;
+                    width = 0.35f;
                     break;
                 default:
                     color = context.getResources().getColor(R.color.colorNormal);
-                    width = 0.6f;
+                    width = 0.68f;
                     break;
             }
             background.setBackgroundColor(color);
-           ConstraintSet constraintSet = new ConstraintSet();
+            ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(container);
             constraintSet.constrainPercentWidth(background.getId(), width);
             constraintSet.applyTo(container);
@@ -97,8 +97,9 @@ public class HistoricAdapter extends RecyclerView.Adapter {
 
             // Text display
 
-            String timestampText[] = {"Hier", "Avant-hier", "Il y a trois jours", "il y a quatre jours",
-                    "il y a cinq jours", "il y a six jours", "il y a une semaine"};
+            String timestampText[] = {"Il y a une semaine", "Il y a six jours", "Il y a cinq jours",
+                    "Il y a quatre jours", "Il y a trois jours", "Avant-hier", "Hier"};
+
             TextView historicMoodTextView = itemView.findViewById(R.id.timestamp);
             historicMoodTextView.setText(timestampText[getAdapterPosition()]);
 
