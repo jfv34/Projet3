@@ -56,7 +56,6 @@ public class HistoricFragment extends Fragment {
             historicMood = gson.fromJson(historicMoodJson, listType);
         }
 
-
         // Don't show mood of the day in historic
         historicMoodWithoutToday = new ArrayList<>();
         for (int i = 0; i < historicMood.size() - 1; i++) {
@@ -84,7 +83,12 @@ public class HistoricFragment extends Fragment {
                 historicMoodCompleted.add(i, new SaveMood("HappyFragment", dateBack, ""));
             }
         }
+        // Inverted historic for display
 
+        historicMoodDisplayed = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            historicMoodDisplayed.add(i, historicMoodCompleted.get(6 - i));
+        }
 
         final RecyclerView rv = fragmentView.findViewById(R.id.historiclist);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -95,7 +99,7 @@ public class HistoricFragment extends Fragment {
                     @Override
                     public void onGlobalLayout() {
                         int cellHeight = rv.getHeight() / 7;
-                        rv.setAdapter(new HistoricAdapter(getContext(), historicMoodCompleted, cellHeight));
+                        rv.setAdapter(new HistoricAdapter(getContext(), historicMoodDisplayed, cellHeight));
                         rv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 });
